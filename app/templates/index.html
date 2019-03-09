@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block head %}
+  {{ super() }}
+  
+{% endblock %}
+
+{% block nav %}
+{{ super() }} 
+{% endblock %}
+
+{% block content %}
+
+<body>
+
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
+    style="background:transparent url({{url_for('static', filename='image/background/background1.jpg')}}) no-repeat center center /cover">
+      <div>
+        <h1 class="display-2 font-weight-normal text-white">AI PLAYGROUND</h1><br/>
+        <p class="lead font-weight-bold text-white">WHERE MACHINES GO TO PLAY</p>
+      </div>
+      
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">OBJECT DETECTION</h2>
+          <p class="lead">WHAT'S IN THAT PICTURE?</p>
+          <a class="btn btn-light" href="/object_detection" role="button">TAKE ME THERE</a>
+
+
+        </div>
+        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;
+        background:transparent url({{url_for('static', filename='image/background/1551647098_18.png')}}) no-repeat center center /cover"></div>
+        
+      </div>
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">NATURAL LANGUAGE PROCESSING</h2>
+          <p class="lead">DETECTING CYBERBULLYING AND PREDATORIAL BEHAVIOUR</p>
+          <a class="btn btn-dark" href="/cyber_bullying" role="button">LET'S DO THIS</a>
+        </div>
+        <div class="bg-dark box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;
+        background:transparent url({{url_for('static', filename='image/background/code_snippet.png')}}) no-repeat center center /cover"></div>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">WHAT'S IN THAT VIDEO?</h2>
+          <p class="lead">OBJECT DETECTION ON VIDEO CONTENT</p>
+          <a class="btn btn-light" href="/object_detection_video" role="button">I WANT ONE</a>
+        </div>
+        <div class="bg-dark box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;
+        background:transparent url({{url_for('static', filename='image/background/video_backdrop.png')}}) no-repeat center center /cover"></div>
+      </div>
+      <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">WHY SO ANGRY?</h2>
+          <p class="lead">SENTIMENT ANALYSIS ON SOCIAL MEDIA</p>
+        </div>
+        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;
+        background:transparent url({{url_for('static', filename='image/background/sentiment_background.jpg')}}) no-repeat center center /cover""></div>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">FUTURE CAPABILITY</h2>
+          <p class="lead">MORE CONTENT WILL APPEAR HERE</p>
+        </div>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">FUTURE CAPABILITY</h2>
+          <p class="lead">MORE CONTENT WILL APPEAR HERE</p>
+        </div>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">FUTURE CAPABILITY</h2>
+          <p class="lead">MORE CONTENT WILL APPEAR HERE</p>
+        </div>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">FUTURE CAPABILITY</h2>
+          <p class="lead">MORE CONTENT WILL APPEAR HERE</p>
+        </div>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+    </div>
+
+   
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="{{url_for('static', filename='popper.min.js')}}"></script>
+    
+
+    <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='holder.min.js')}}"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+
+  </body>
+  {% endblock %}
+  </html>

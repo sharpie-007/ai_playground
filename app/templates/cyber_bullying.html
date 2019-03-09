@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block head %}
+  {{ super() }}
+  
+{% endblock %}
+
+{% block nav %}
+{{ super() }} 
+{% endblock %}
+
+{% block content %}
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<body>
+
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
+        style="background:transparent url({{url_for('static', filename='background1.jpg')}}) no-repeat center center /cover">
+          <div>
+            <h1 class="display-2 font-weight-normal text-white">CYBER BULLYING</h1><br/>
+            <p class="lead font-weight-bold text-white">DETECTING AGGRESSIVE LANGUAGE</p>
+          </div>
+      
+    </div>
+
+    <div class="container lg text-center">
+            <div class="row">
+                    <div class="col-lg-12 form-group-lg">
+                        <form action="/detect_aggression" method="get">
+                            <input type="text" class="form-control form-control-lg" name="query" placeholder="WRITE A PHRASE HERE">
+                            <div class="col-lg-offset-5">
+                                <button type="submit" class="btn btn-lg btn-dark mt-2">SUBMIT</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+    </div>
+    <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 text-center text-white bg-dark">
+            <h1 class="lead font-weight-bold">ABOUT CYBER THE BULLYING ALGORITHM</h1>  
+   </div>
+   <div class="container">
+   <p class="font-weight-bold">BACKGROUND</p>
+   <p>This algorithm was developed from a <a href ="www.kaggle.com">Kaggle</a> dataset of tweets that were classified as aggressive. The source dataset 
+    is here <a href="https://www.kaggle.com/dataturks/dataset-for-detection-of-cybertrolls">here</a>. <br/>
+    <br/>
+    <strong>Dataset Characteristics</strong>
+    <ul>
+        <li>Total Number of Messages: 20,0001</li>
+        <li>Aggressive: 7,822</li>
+        <li>Non Aggressive: 12,179</li>
+    </ul>
+   </p>
+
+</div>
+
+<div id="chart", class="position-relative overflow-hidden p-3 p-md-3 m-md-3 text-center center", style="height: 600px; width: 90%"></div>
+
+
+<script>
+  TESTER = document.getElementById('tester');
+  // Plotly.plot( TESTER, [{
+  // x: [1, 2, 3, 4, 5],
+  // y: [1, 2, 4, 8, 16] }], {
+  // margin: { t: 0 } } );
+  var graphs = {{graphJSON | safe}};
+      
+      Plotly.plot('chart',graphs,{});
+</script>
+   
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="{{url_for('static', filename='popper.min.js')}}"></script>
+    
+
+    <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='holder.min.js')}}"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+
+  </body>
+  {% endblock %}
+  </html>
