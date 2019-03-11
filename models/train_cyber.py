@@ -13,6 +13,10 @@ import tensorflow as tf
 import argparse
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import accuracy_score
 from joblib import dump
 
 def tokenize(text, vocab_size):
@@ -102,6 +106,9 @@ if __name__ == "__main__":
                         )
 
     predictions = model.predict_classes(X_test, verbose = 1)
+    full_predictions = model.predict_classes(X, verbose = 1)
+    training_data['Predictions'] = full_predictions
+    training_data.to_csv("final_dataset.csv")
     
     print("\n=============CLASSIFICATION RESULTS=============")
     print("\n================Confusion Matrix================")
@@ -109,18 +116,46 @@ if __name__ == "__main__":
     print("\n=============Classification Report==============")
     print(classification_report(y_test[:,1], predictions))
 
+    confusion_matrix = (confusion_matrix(y_test[:, 1], predictions))
+    performance_summary_dict = {
+        "Data Characteristics":{
+            "Total Phrases": training_data.shape[0],
+            "Aggressive Phrases": len(training_data[training_data['label'] == "1"]),
+            "Non Aggressive Phrases": len(training_data[training_data['label'] == "0"]),
+            "Average Word Count": int(training_data['content'].apply(lambda x: len(x.split(" "))).mean()),
+            "Shortest Phrase Length": training_data['content'].apply(lambda x: len(x.split(" "))).sort_values().iloc[0],
+            "Longest Phrase Length": training_data['content'].apply(lambda x: len(x.split(" "))).sort_values(ascending = False).iloc[0]
+
+            },
+        "Confusion Matrix": {
+            "True Positives": confusion_matrix[0][0],
+            "False Positives": confusion_matrix[0][1],
+            "False Negatives": confusion_matrix[1][0],
+            "True Negatives": confusion_matrix[1][1]
+            },
+        "Classification Report":{
+            "Precision": precision_score(y_test[:,1], predictions),
+            "Recall": recall_score(y_test[:,1], predictions),
+            "Accuracy": accuracy_score(y_test[:,1], predictions),
+            "F1 Score": f1_score(y_test[:,1], predictions)
+            }}
+    
+
+
+
     # serialize model to JSON
     print("\nSaving trained model and tokenizer")
-
     model_json = model.to_json()
     with open("cyber_model.json", "w") as json_file:
         json_file.write(model_json)
     # serialize weights to HDF5
     model.save_weights("cyber_model.h5")
     print("Saved model to disk")
-
     dump(tokenizer, 'cyber_tokenizer.joblib')
     dump(history, 'cyber_model_history.joblib')
+    dump(performance_summary_dict, 'performance_summary.joblib')
+    
+
 
 
 

@@ -15,7 +15,7 @@
 <body>
 
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
-        style="background:transparent url({{url_for('static', filename='background1.jpg')}}) no-repeat center center /cover">
+        style="background:transparent url({{url_for('static', filename='image/background/background1.jpg')}}) no-repeat center center /cover">
           <div>
             <h1 class="display-2 font-weight-normal text-white">CYBER BULLYING</h1><br/>
             <p class="lead font-weight-bold text-white">DETECTING AGGRESSIVE LANGUAGE</p>
@@ -34,37 +34,87 @@
                         </form>
                     </div>
                 </div>
-    </div>
+    
+  </div>
     <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 text-center text-white bg-dark">
             <h1 class="lead font-weight-bold">ABOUT CYBER THE BULLYING ALGORITHM</h1>  
    </div>
-   <div class="container">
+   <div class="osition-relative overflow-hidden p-3 p-md-3 m-md-3 text-center row">
+      <div class="col text-center">
    <p class="font-weight-bold">BACKGROUND</p>
-   <p>This algorithm was developed from a <a href ="www.kaggle.com">Kaggle</a> dataset of tweets that were classified as aggressive. The source dataset 
+   <p>This algorithm was developed from a <a href ="http://www.kaggle.com">Kaggle</a> dataset of tweets that were classified as aggressive. The source dataset 
     is here <a href="https://www.kaggle.com/dataturks/dataset-for-detection-of-cybertrolls">here</a>. <br/>
-    <br/>
-    <strong>Dataset Characteristics</strong>
-    <ul>
-        <li>Total Number of Messages: 20,0001</li>
-        <li>Aggressive: 7,822</li>
-        <li>Non Aggressive: 12,179</li>
-    </ul>
-   </p>
+    <div class="row">
+        <div class="col-sm">
+            <p class="h6">DATASET CHARACTERISTICS</p> <br/>
+            <table class="table table-hover table-sm table-striped ">
+                {% for key, value in cyber_model_perf_summary['Data Characteristics'].items() %}
+                <tr>
+                <td class="font-weight-bold">{{key}}</td>
+                <td>{{value}}</td>
+              </tr>
+          {% endfor %}
+    </table>
+   </div>
+   <div class="col-sm">
+      <p class="h6">MODEL CONFUSION MATRIX</p><br/>
+      <table class="table table-hover table-sm table-striped table-dark ">
+                  {% for key, value in cyber_model_perf_summary['Confusion Matrix'].items() %}
+                  <tr>
+                  <td class="font-weight-bold">{{key}}</td>
+                  <td>{{value}}</td>
+                </tr>
+            {% endfor %}
+      </table>
+   </div>
+   <div class="col-sm">
+      <p class="h6">CLASSIFICATION REPORT</p><br/>
+      <table class="table table-hover table-sm table-striped ">
+          {% for key, value in cyber_model_perf_summary['Classification Report'].items() %}
+          <tr>
+          <td class="font-weight-bold">{{key}}</td>
+          <td>{{'%0.2f'| format(value*100|float)}}%</td>
+        </tr>
+    {% endfor %}
+</table>
+   </div>
+</div>
+<p class="h6">SAMPLE TEXTS FROM DATASET</p>
+<table class="table table-hover table-sm table-striped ">
+    <thead>
+        <th scope="col">Five Agro Examples</th>
+        <th scope="col">Five Chill Examples</th>
+    </thead>
+    {% for i in range (0, five_random_agros|length) %}
+    <tr>
+      <td>{{five_random_agros[i]}}</td>
+
+      <td>{{five_random_chills[i]}}</td>
+  </tr>
+{% endfor %}
+</table>
 
 </div>
 
-<div id="chart", class="position-relative overflow-hidden p-3 p-md-3 m-md-3 text-center center", style="height: 600px; width: 90%"></div>
+<div id="chart", class="col position-relative overflow-hidden p-3 p-md-3 m-md-3 text-center center", style="height: 700px; width: 90%">
+  </div>
 
 
 <script>
-  TESTER = document.getElementById('tester');
-  // Plotly.plot( TESTER, [{
-  // x: [1, 2, 3, 4, 5],
-  // y: [1, 2, 4, 8, 16] }], {
-  // margin: { t: 0 } } );
+
   var graphs = {{graphJSON | safe}};
-      
-      Plotly.plot('chart',graphs,{});
+  var layout = {
+  title: {
+    text:'KERAS MODEL REPORT',
+    font: {
+      family: 'Helvetica',
+      size: 24
+    },
+    xref: 'paper',
+    x: 0.05
+  }
+  }
+      Plotly.plot('chart',graphs, layout);
 </script>
    
 
@@ -74,11 +124,11 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="{{url_for('static', filename='popper.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/popper.min.js')}}"></script>
     
 
-    <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
-    <script src="{{url_for('static', filename='holder.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/holder.min.js')}}"></script>
     <script>
       Holder.addTheme('thumb', {
         bg: '#55595c',

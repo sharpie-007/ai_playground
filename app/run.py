@@ -15,9 +15,16 @@ from keras.models import model_from_json
 import joblib
 import plotly.plotly as py
 import plotly.graph_objs as graph_objects
+import tensorflow as tf
+import random
 
+# Initialize YOLOv3 model before the app functions, keeps users from having to wait.
 
-# Initialize YOLOv3 model before the functions, keeps users from having to wait.
+# The YOLOv3 implementation was originally a command line script from a tutorial on
+# https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/. I've
+# heavily modified it to provide summary classification results that can be rendered
+# into this flask app and included the ability for a user to paste their own image
+# url in to see how YOLO-COCO works.
 
 # YOLO CONFIGURATION
 yolo_path = 'yolo-coco'
@@ -44,8 +51,41 @@ ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 # Loading Aggression Detection Model
 
+cyber_tokenizer = joblib.load("../models/cyber_tokenizer.joblib")
+json_file = open("../models/cyber_model.json")
+model_json = json_file.read()
+json_file.close()
+cyber_model = model_from_json(model_json)
+cyber_model.load_weights("../models/cyber_model.h5")
+cyber_model._make_predict_function()
 
+# Loading model outputs
+
+cyber_model_history = joblib.load("../models/cyber_model_history.joblib")
+cyber_model_perf_summary = joblib.load("../models/performance_summary.joblib")
+cyber_df = pd.read_csv("../models/final_dataset.csv")
+
+
+# YOLO OBJECT DETECTION
 def process_images_complete(url_list, net=net):
+    '''
+    Function takes in a url and a CNN (default configured for YOLOv3), then 
+    attempts to grab the image on the other side using URLLIB, convert it to
+    an array, and then feed it through the Darknet CNN. As objects are detected,
+    a summary dictionary is created to produce a report to be fed to the website
+    for the user to review, as well as a new image. 
+    Capable of handling multiple URLS, however the site is set up for single 
+    URL's currently.
+
+    Args:
+        url_list: list of image urls, must be absolute (i.e. no google:data/ 
+        urls)
+        net: (Optional). The Neural net to perform the object detection with.
+
+    Returns:
+        results: summary dictionary of objects found in image.
+        ***dumps a new image wih a bounding box to static/images
+    '''
 
     output_dir = 'static'
     results = {}
@@ -135,6 +175,8 @@ def process_images_complete(url_list, net=net):
         cv2.imwrite(output_dir +"/" + image_name, image)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
+        # Generate the summary dictionary
+
         object_summary = {}
         unique_objects = set(object_labels)
         for detected_object in unique_objects:
@@ -171,13 +213,45 @@ def object_detection_video():
 
 @app.route('/cyber_bullying')
 def cyber_bullying():
-    count = 500
-    xScale = np.linspace(0, 100, count)
-    yScale = np.random.randn(count)
-    trace = graph_objects.Scatter(x = xScale, y = yScale)
-    data = [trace]
+    '''
+    Flask function that takes outputs from cyber_training.py and renders them into
+    summary tables and a plotly graph.
+
+    Args: None
+
+    Returns: 
+        graphJSON: A prepared plotly graph data object.
+        cyber_model_history: The history of the accuracy, loss, validation 
+                            accuracy, and validation loss of the model training.
+        cyber_model_perf_summary: a Dictionary containing the conventional 
+        accuracy, f-score, recall, and precision metrics from sklearn along with the 
+        five_random_agros: five 
+
+
+
+    '''
+
+    xScale = np.linspace(0, 1, len(cyber_model_history.history['val_loss']))
+    y0_Scale = cyber_model_history.history['val_loss']
+    y1_Scale = cyber_model_history.history['val_acc']
+    y2_Scale = cyber_model_history.history['loss']
+    y3_Scale = cyber_model_history.history['acc']
+    Validation_Loss = graph_objects.Scatter(x = xScale, y = y0_Scale, name="Validation Loss")
+    Validation_Accuracy = graph_objects.Scatter(x = xScale, y = y1_Scale, name="Validation Accuracy")
+    Loss = graph_objects.Scatter(x = xScale, y = y2_Scale, name="Loss")
+    Accuracy = graph_objects.Scatter(x = xScale, y = y3_Scale, name="Accuracy")
+    data = [Validation_Loss, Validation_Accuracy, Loss, Accuracy]
     graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)    
-    return render_template('cyber_bullying.html', graphJSON = graphJSON)
+    five_random_agros = cyber_df['content'][cyber_df['label'] == 1].iloc[0:5].tolist()
+    five_random_chills = cyber_df['content'][cyber_df['label'] == 0].iloc[0:5].tolist()
+
+    return render_template('cyber_bullying.html',
+    graphJSON = graphJSON,
+    cyber_model_history = cyber_model_history,
+    cyber_model_perf_summary = cyber_model_perf_summary,
+    five_random_agros = five_random_agros,
+    five_random_chills = five_random_chills)
+    
 
 
 # web page that handles user query and displays model results
@@ -200,10 +274,13 @@ def go():
 def detect_aggression():
     query = request.args.get('query', '')
     print(query)
+    query_token = cyber_tokenizer.texts_to_matrix([query])
+    cyber_prediction  = cyber_model.predict_proba(query_token)
 
     return render_template(
         'aggression_results.html',
-        query=query
+        query=query,
+        prediction = cyber_prediction
         
         # classification_result=classification_results
     )

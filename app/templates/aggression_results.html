@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
-style="background:transparent url({{url_for('static', filename='background1.jpg')}}) no-repeat center center /cover">
+style="background:transparent url({{url_for('static', filename='image/background/background1.jpg')}}) no-repeat center center /cover">
   <div>
     <h1 class="display-2 font-weight-normal text-white">AGGRESSION DETECTION</h1><br/>
     <p class="lead font-weight-bold text-white">RESULTS</p>
@@ -18,11 +18,39 @@ style="background:transparent url({{url_for('static', filename='background1.jpg'
 </div>
 
     <div class="position-relative overflow-hidden p-3  m-md-3 text-center">
-        <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="h3">PREDICTION DETAILS</div>
+                  <table class="table table-hover table-striped">
+
+                          <tr>
+                              <td scope="col" class="font-weight-bold">Original Query</td><td scope="col"><i>"{{query}}"</i></td>
+                              
+                          </tr>
+                              <tr>
+                              <td class="font-weight-bold">Level of Chill</td><td>{{'%0.2f'| format(prediction[0][0]*100|float)}}%</td></tr>
+                              <tr><td class="font-weight-bold">Level of Agro</td><td>{{'%0.2f'| format(prediction[0][1]*100|float)}}%</td>
+                          </tr>
+                  </table>
+            </div>
+            <div class="col-sm">
+              {% if prediction[0][0] > 0.5 %}
+                <img class="img-fluid rounded mx-auto" style="height: 60%" src="https://media.giphy.com/media/ely3apij36BJhoZ234/giphy.gif"></img>
+              {% else %}
+              <img class="img-fluid rounded mx-auto" style="height: 100%" src="https://media.giphy.com/media/G9PeXm6jdY6MU/giphy.gif"></img>
+              {% endif %}
+          </div>
+            
+        <!-- <div class="row">
             <div class="col">
+
     <h4 class="text-center">What we got</h4>
-    <img width="80%" src="{{query}}" class="img-fluid rounded mx-auto">
-    <p class="text-center"><i>{{query}}</i></p>
+    <p class="text-center display-6"><i>"{{query}}"</i></p>
+    <p class="text-center">Chill: <i></i></p>
+    <p class="text-center">Agro: <i></i></p>
+    <img src="https://media.giphy.com/media/G9PeXm6jdY6MU/giphy.gif"></img> -->
+
 </div>
 
 </div>
