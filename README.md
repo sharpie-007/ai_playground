@@ -24,6 +24,7 @@ The solution is deployed as a flask app, and requires two things to be completed
 
 1. You'll need to download the YOLOv3 weights for the coco model from Joseph Redmon's site here: https://pjreddie.com/media/files/yolov3.weights and drop it into the yolo-coco directory.
 2. You'll want to run train_cyber.py to build your own cyber model.
+e.g. `python train_cyber.py -f <filename> --vocab_size 500 --epochs 50`
 
 Once both are complete you can run it in the app folder with `python run.py`
 
