@@ -18,31 +18,23 @@ I chose these three demonstrations because Computer Vision gets a lot of attenti
 
 In each demonstration, the user will see some of the positives (detecting subversive speech, blurry objects) and negatives (unable to detect sarcasm, limited vocabulary, missing objects, misclassification) of using each model. Again, the intent is to demystify the process somewhat.
 
-N.B., the video based object detection demo is non-interactive. Having a dynamic one (i.e. user uploaded videos), would have been too costly to deploy (both in computer and in monetary terms).
+N.B., the video based object detection demo is non-interactive. Having a dynamic one (i.e. user uploaded videos), would have been too costly to deploy (both in compute and in monetary terms).
 
-## Application Structure
+## Application Set up
 
 The solution is deployed as a flask app, and requires two things to be completed before it will run:
 
 1. You'll need to download the YOLOv3 weights for the coco model from Joseph Redmon's site here: https://pjreddie.com/media/files/yolov3.weights and drop it into the yolo-coco directory.
 2. You'll want to run train_cyber.py to build your own cyber model.
 
-### Folder Structure
+## YOLOv3 and Object Detection
 
-root
-|-app
-|   |-static
-|       |-css
-|       |-image
-|       |   |-css
-|       |   |-image
-|       |   |-js
-|       |   |-video
-|       |-templates
+You can download the weight file here: https://pjreddie.com/media/files/yolov3.weights. The overall Convolusional Neural Net (CNN) is based on the research from Joseph Redmon. https://pjreddie.com/darknet/yolo/. For the implementation of the static object classifier, I started with source code from pyimagesearch (https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/) and then heavily modified it to work with the web site, catch url's, and produce object summaries.
+
+The object detection function takes a url from the user, tries to grab it with urllib, converts it to an array, resizes it, passes it through the CNN, then produces a summary of the ojbects it detected. It drops out a new file with the bounding boxes on it which is rendered side by side in the web page. I don't elaborate on the CNN construction as this is well covered here: https://pjreddie.com/darknet/yolo/
 
 
+### Site Design.
 
-## A word on YOLOv3
-
-You can download the weight file here: https://pjreddie.com/media/files/yolov3.weights. The overall Convolusional Neural Net (CNN) is based on the research from Joseph Redmon. https://pjreddie.com/darknet/yolo/.
+The site uses bootstrap.js for it's design foundation, and the specific layout is based on the Product template (https://getbootstrap.com/docs/4.0/examples/product/)
 
