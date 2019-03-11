@@ -209,17 +209,22 @@ def index():
 
 # Static Object Detection Landing Page
 
-
 @app.route('/object_detection')
 def object_detection():
     return render_template('object_detection.html')
 
 # Video Object Detection Landing Page
 
-
 @app.route('/object_detection_video')
 def object_detection_video():
     return render_template('object_detection_video.html')
+
+
+# About Page
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 # Cyber Bullying Landing Page
 
