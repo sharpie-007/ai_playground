@@ -27,6 +27,8 @@ The solution is deployed as a flask app, and requires two things to be completed
 1. You'll need to download the YOLOv3 weights for the coco model from Joseph Redmon's site here: https://pjreddie.com/media/files/yolov3.weights and drop it into the yolo-coco directory.
 2. You'll want to run train_cyber.py to build your own cyber model.
 
+Once both are complete you can run it in the app folder with `python run.py`
+
 ## YOLOv3 and Object Detection
 
 You can download the weight file here: https://pjreddie.com/media/files/yolov3.weights. The overall Convolusional Neural Net (CNN) is based on the research from Joseph Redmon. https://pjreddie.com/darknet/yolo/. For the implementation of the static object classifier, I started with source code from pyimagesearch (https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/) and then heavily modified it to work with the web site, catch url's, and produce object summaries.
