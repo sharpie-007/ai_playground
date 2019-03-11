@@ -32,7 +32,9 @@ default_confidence = 0.5
 default_threshold = 0.3
 
 # Load YOLOv3 COCO Classes
-labelsPath = os.path.sep.join([yolo_path, "coco.names"])
+# labelsPath = os.path.sep.join([yolo_path, "coco.names"])
+labelsPath = "../" + yolo_path + "/coco.names"
+
 LABELS = open(labelsPath).read().strip().split("\n")
 
 # Create Bounding Box Colours
@@ -41,9 +43,10 @@ COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),
 	dtype="uint8")
 
 # Collect Weights and Config for Darknet-COCO
-weightsPath = os.path.sep.join([yolo_path, "yolov3.weights"])
-configPath = os.path.sep.join([yolo_path, "yolov3.cfg"])
-
+# weightsPath = os.path.sep.join([yolo_path, "yolov3.weights"])
+# configPath = os.path.sep.join([yolo_path, "yolov3.cfg"])
+weightsPath = "../" + yolo_path + "/yolov3.weights"
+configPath = "../" + yolo_path + "/yolov3.cfg"
 # initialize and load the model
 net = cv2.dnn.readNetFromDarknet(configPath, weightsPath)
 ln = net.getLayerNames()
@@ -84,7 +87,8 @@ def process_images_complete(url_list, net=net):
 
     Returns:
         results: summary dictionary of objects found in image.
-        ***dumps a new image wih a bounding box to static/images
+        ***dumps a new image wih a bounding box to static/image with the 
+        filename <current_time + iteration>
     '''
 
     output_dir = 'static'
@@ -203,19 +207,28 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+# Static Object Detection Landing Page
+
+
 @app.route('/object_detection')
 def object_detection():
     return render_template('object_detection.html')
+
+# Video Object Detection Landing Page
+
 
 @app.route('/object_detection_video')
 def object_detection_video():
     return render_template('object_detection_video.html')
 
+# Cyber Bullying Landing Page
+
+
 @app.route('/cyber_bullying')
 def cyber_bullying():
     '''
     Flask function that takes outputs from cyber_training.py and renders them into
-    summary tables and a plotly graph.
+    summary tables and a plotly graph. TODO, make the sentences random.
 
     Args: None
 
@@ -225,17 +238,15 @@ def cyber_bullying():
                             accuracy, and validation loss of the model training.
         cyber_model_perf_summary: a Dictionary containing the conventional 
         accuracy, f-score, recall, and precision metrics from sklearn along with the 
-        five_random_agros: five 
-
-
-
+        five_random_agros: five aggressive phrases
+        five_random_chills: five non aggressive phrases
     '''
 
-    xScale = np.linspace(0, 1, len(cyber_model_history.history['val_loss']))
-    y0_Scale = cyber_model_history.history['val_loss']
-    y1_Scale = cyber_model_history.history['val_acc']
-    y2_Scale = cyber_model_history.history['loss']
-    y3_Scale = cyber_model_history.history['acc']
+    xScale = np.linspace(0, 1, len(cyber_model_history['val_loss']))
+    y0_Scale = cyber_model_history['val_loss']
+    y1_Scale = cyber_model_history['val_acc']
+    y2_Scale = cyber_model_history['loss']
+    y3_Scale = cyber_model_history['acc']
     Validation_Loss = graph_objects.Scatter(x = xScale, y = y0_Scale, name="Validation Loss")
     Validation_Accuracy = graph_objects.Scatter(x = xScale, y = y1_Scale, name="Validation Accuracy")
     Loss = graph_objects.Scatter(x = xScale, y = y2_Scale, name="Loss")
@@ -254,7 +265,7 @@ def cyber_bullying():
     
 
 
-# web page that handles user query and displays model results
+# Object Detection results page
 @app.route('/go')
 def go():
     query = request.args.get('query', '')
@@ -270,6 +281,9 @@ def go():
         summary=summary
         # classification_result=classification_results
     )
+
+# Aggression Detection Results Page
+
 @app.route('/detect_aggression')
 def detect_aggression():
     query = request.args.get('query', '')

@@ -152,7 +152,7 @@ if __name__ == "__main__":
     model.save_weights("cyber_model.h5")
     print("Saved model to disk")
     dump(tokenizer, 'cyber_tokenizer.joblib')
-    dump(history, 'cyber_model_history.joblib')
+    dump(history.history, 'cyber_model_history.joblib')
     dump(performance_summary_dict, 'performance_summary.joblib')
     
 

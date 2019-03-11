@@ -26,7 +26,7 @@ style="background:transparent url({{url_for('static', filename='image/background
 </div>
 <div class="col">
         <h4 class="text-center">What we saw</h4>
-    <img width="100%" src="{{url_for('static', filename=filename)}}" class="img-fluid rounded mx-auto">
+    <a href="{{url_for('static', filename=filename)}}"><img width="100%" src="{{url_for('static', filename=filename)}}" class="img-fluid rounded mx-auto"></a>
     <table class="table">
         <thead>
             <tr>
