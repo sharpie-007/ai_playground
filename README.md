@@ -20,6 +20,28 @@ In each demonstration, the user will see some of the positives (detecting subver
 
 N.B., the video based object detection demo is non-interactive. Having a dynamic one (i.e. user uploaded videos), would have been too costly to deploy (both in computer and in monetary terms).
 
+## Application Structure
+
+The solution is deployed as a flask app, and requires two things to be completed before it will run:
+
+1. You'll need to download the YOLOv3 weights for the coco model from Joseph Redmon's site here: https://pjreddie.com/media/files/yolov3.weights and drop it into the yolo-coco directory.
+2. You'll want to run train_cyber.py to build your own cyber model.
+
+### Folder Structure
+
+root
+|-app
+|   |-static
+|       |-css
+|       |-image
+|       |   |-css
+|       |   |-image
+|       |   |-js
+|       |   |-video
+|       |-templates
+
+
+
 ## A word on YOLOv3
 
 You can download the weight file here: https://pjreddie.com/media/files/yolov3.weights. The overall Convolusional Neural Net (CNN) is based on the research from Joseph Redmon. https://pjreddie.com/darknet/yolo/.
