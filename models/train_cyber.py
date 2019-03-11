@@ -42,6 +42,7 @@ def tokenize(text, vocab_size):
 
 if __name__ == "__main__":
 
+    # Command line arguments capture
     ap = argparse.ArgumentParser()
     ap.add_argument("-f", "--filename", required=True,
         help="file that contains the dataset")
@@ -51,6 +52,8 @@ if __name__ == "__main__":
         help="number of epochs for training the model")
     args = vars(ap.parse_args())
 
+
+    # Casting args as new variables for readability
     vocab_size = int(args['vocab_size'])
     epochs = int(args['epochs'])
 
@@ -59,6 +62,7 @@ if __name__ == "__main__":
     training_data = pd.read_json(args['filename'], lines = True)
     print("Done!")
 
+    # Converting dict labels into columnar format
     print("\nConverting Labels...")
 
     labels = []
@@ -70,11 +74,15 @@ if __name__ == "__main__":
 
     tokenizer, X = tokenize(training_data['content'], vocab_size)
 
+    # Splitting test and train. The small sample size led me to use a small testing set.
+
     print("\nSplitting into Training and Test data...")
 
     y = to_categorical(labels)
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                     test_size=0.15, random_state=42)
+
+    # Build the NN. See readme.md for the details on why this architecture
 
     print("\nCreating the Neural Network")
     model = Sequential()
@@ -91,8 +99,11 @@ if __name__ == "__main__":
                 metrics=['accuracy'])
     print(model.summary())
 
+    # The dataset is imbalanced (see the web app) so boosting one class to
+    # try to compensate.
+
     class_weight = {0: 1,
-                1: 1.68}
+                1: 1.85}
 
     print("\nTraining Model")
 
@@ -115,6 +126,9 @@ if __name__ == "__main__":
     print(confusion_matrix(y_test[:,1], predictions))
     print("\n=============Classification Report==============")
     print(classification_report(y_test[:,1], predictions))
+
+
+    # Create the dictionaries to be used by the web app
 
     confusion_matrix = (confusion_matrix(y_test[:, 1], predictions))
     performance_summary_dict = {
@@ -141,14 +155,17 @@ if __name__ == "__main__":
             }}
     
 
-
+    # Save everything to disk
 
     # serialize model to JSON
+
     print("\nSaving trained model and tokenizer")
     model_json = model.to_json()
     with open("cyber_model.json", "w") as json_file:
         json_file.write(model_json)
+
     # serialize weights to HDF5
+
     model.save_weights("cyber_model.h5")
     print("Saved model to disk")
     dump(tokenizer, 'cyber_tokenizer.joblib')

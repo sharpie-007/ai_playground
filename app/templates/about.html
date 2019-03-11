@@ -15,19 +15,47 @@
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
         style="background:transparent url({{url_for('static', filename='image/background/background1.jpg')}}) no-repeat center center /cover">
           <div>
-            <h1 class="display-2 font-weight-normal text-white">OBJECT DETECTION IN VIDEO</h1><br/>
-            <p class="lead font-weight-bold text-white">ALL THE BOXES ALL THE TIME</p>
+            <h1 class="display-2 font-weight-normal text-white">ABOUT THIS SITE</h1><br/>
+            <p class="lead font-weight-bold text-white">NO REALLY, WHAT IS THIS ALL ABOUT?</p>
           </div>
       
     </div>
 
-    <div class="container lg text-center">
-            <div class="row">
-                    <div class="col-lg-12 form-group-lg">
-                        <h4>ABOUT THE PLAYBROUND</h4>
-                        
-                    </div>
-                </div>
+                <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3 bg-light">
+                    <div class="display-4 lead  text-center">BACKGROUND</div> <br/>
+                    <p class="text-justify">  We hear about AI everywhere, and every time it gets mentioned, the reality, and fiction behind 
+                        what AI is and could be gets a little more blurry. Terms can be confusing (Computer Vision, Object Detection, 
+                        Natural Language Detection, Narrow AI, General AI, etc) and are often intermingled and mixed without consideration. 
+                        This makes it very difficult for people who aren't in the field, but are required to be able to procure, implement, 
+                        and ultimately move their businesses in the direction of Artificial Intelligence. <strong>How might we </strong>
+                        desmystify AI in an engaging, 
+                        simple, and powerful way so that non Data Science profesisonals can grasp it's potential and it's limits?</p>
+
+                        <div class="display-4 lead text-center">THE AI PLAYGROUND</div> <br/>
+                        <p class="text-justify">I decided that using Jupyter Notebooks, while an enormous leap forward from showing people 
+                            source code and or command line interfaces, wouldn't be an impactful way to let people interact with trained 
+                            classifiers. I decided instead to build out a couple of demonstration capabilities that regular users could interact 
+                            with. This way a user could experience some of the benefits, advantages, drawbacks, and shortcomings of some of 
+                            applied machine learning. I broke this down into three demonstrations.
+                            <ol>
+                                <li>Static Image Object Detection (Using a pre-trained, open source model)</li>
+                                <li>Video Based Object Detection (Using a pre-trained, open source model)</li>
+                                <li>Binary Text Classification (including all source code to prepare and train a Keras Model)</li>
+                            </ol>
+                                
+                                I chose these three demonstrations because Computer Vision gets a lot of attention, and it's visually very compelling 
+                                to interact with, and text classification because Natural Language Processing (NLP) is a passion of mine and I want to 
+                                shine more light on the issues around cyber bullying and the potential things we can do to limit it using more advanced 
+                                techniques. <br/><br/>
+                                
+                                In each demonstration, the user will see some of the positives (detecting subversive speech, blurry objects) and 
+                                negatives (unable to detect sarcasm, limited vocabulary, missing objects, misclassification) of using each model. 
+                                Again, the intent is to demystify the process somewhat.<br/><br/>
+                                
+                                N.B., the video based object detection demo is non-interactive. Having a dynamic one (i.e. user uploaded videos), 
+                                would have been too costly to deploy (both in compute and in monetary terms).</p><br/>
+
+                        <a href="https://github.com/sharpie-007/ai_playground/blob/master/README.md">You can read the implementation details here.</a>
     </div>
    
 
