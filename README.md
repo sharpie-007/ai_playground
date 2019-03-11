@@ -8,9 +8,17 @@ We hear about AI everywhere, and every time it gets mentioned, the reality, and 
 
 ## My Solution, the AI Playground.
 
-I decided that using Jupyter Notebooks, while an enormous leap forward from showing people source code and or command line interfaces, wouldn't be an impactful way to let people interact with trained classifiers. I decided instead to build out a couple of demonstration capabilities that regular users could interact with. This way a user could experience some of the benefits, advantages, drawbacks, and shortcomings of some of applied machine learning.
+I decided that using Jupyter Notebooks, while an enormous leap forward from showing people source code and or command line interfaces, wouldn't be an impactful way to let people interact with trained classifiers. I decided instead to build out a couple of demonstration capabilities that regular users could interact with. This way a user could experience some of the benefits, advantages, drawbacks, and shortcomings of some of applied machine learning. I broke this down into three demonstrations.
 
+1. Static Image Object Detection (Using a pre-trained, open source model)
+2. Video Based Object Detection (Using a pre-trained, open source model)
+3. Binary Text Classification (including all source code to prepare and train a Keras Model)
 
+I chose these three demonstrations because Computer Vision gets a lot of attention, and it's visually very compelling to interact with, and text classification because Natural Language Processing (NLP) is a passion of mine and I want to shine more light on the issues around cyber bullying and the potential things we can do to limit it using more advanced techniques. 
+
+In each demonstration, the user will see some of the positives (detecting subversive speech, blurry objects) and negatives (unable to detect sarcasm, limited vocabulary, missing objects, misclassification) of using each model. Again, the intent is to demystify the process somewhat.
+
+N.B., the video based object detection demo is non-interactive. Having a dynamic one (i.e. user uploaded videos), would have been too costly to deploy (both in computer and in monetary terms).
 
 ## A word on YOLOv3
 
