@@ -45,14 +45,14 @@ There's a lot of experimental design in the construction of the NN. By using the
 
 The network is built as follows:
 
-`model = Sequential()`
-`model.add(Embedding(250, 8, input_length=vocab_size))`
-`model.add(Dropout(0.3))`
-`model.add(Flatten())`
-`model.add(Dense(750, activation='relu'))`
-`model.add(Dropout(0.2))`
-`model.add(Dense(75, activation='relu'))`
-`model.add(Dense(2, activation='softmax'))`
+`model = Sequential()` <br/>
+`model.add(Embedding(250, 8, input_length=vocab_size))`<br/>
+`model.add(Dropout(0.3))`<br/>
+`model.add(Flatten())`<br/>
+`model.add(Dense(750, activation='relu'))`<br/>
+`model.add(Dropout(0.2))`<br/>
+`model.add(Dense(75, activation='relu'))`<br/>
+`model.add(Dense(2, activation='softmax'))`<br/>
 
 You can see that we take in a 3 dimensional matrix, then pass it to a 250 neuron layer, then drop 30% of the neurons. Then we flatten it, create a dense layer, dropout 20% of that layer, then add another smaller dense layer, then the output layer. We add the dropout layers to reduce the probability of overfitting the data on the training side, although if you train the model too long (too many epochs) you can still eventually overfit it. I experimented with the design of the network a lot, and this one eventually hit the right amount of compute, convergence, and accuracy for me. I use relu as the activation for the hidden layers and softmax for the output layer so that we get a % probability on the output layer. Read more on softmax here: https://keras.io/activations/#softmax.
 
