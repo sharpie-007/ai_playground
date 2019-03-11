@@ -1,7 +1,5 @@
 # AI Playground
 
-# Background and Description
-
 ## Problem Description
 
 We hear about AI everywhere, and every time it gets mentioned, the reality, and fiction behind what AI is and could be gets a little more blurry. Terms can be confusing (Computer Vision, Object Detection, Natural Language Detection, Narrow AI, General AI, etc) and are often intermingled and mixed without consideration. This makes it very difficult for people who aren't in the field, but are required to be able to procure, implement, and ultimately move their businesses in the direction of Artificial Intelligence. How might we desmystify AI in an engaging, simple, and powerful way so that non Data Science profesisonals can grasp it's potential and it's limits?
@@ -43,9 +41,24 @@ train_cyber.py is designed to be a command line tool to train your own binary te
 
 There's a lot of experimental design in the construction of the NN. By using the Tokenizer I was able to pass vectors to the NN instead of something more simple like BoW. The option I used here was matrix, as the complexity of the overall texts was very low. (their tweets). I may add the ability to change this via the CLI tool at a later stage. You can read more on the Keras Tokenizer function here: https://keras.io/preprocessing/text/.
 
+### Layers
 
+The network is built as follows:
 
+`model = Sequential()`
+`model.add(Embedding(250, 8, input_length=vocab_size))`
+`model.add(Dropout(0.3))`
+`model.add(Flatten())`
+`model.add(Dense(750, activation='relu'))`
+`model.add(Dropout(0.2))`
+`model.add(Dense(75, activation='relu'))`
+`model.add(Dense(2, activation='softmax'))`
 
+You can see that we take in a 3 dimensional matrix, then pass it to a 250 neuron layer, then drop 30% of the neurons. Then we flatten it, create a dense layer, dropout 20% of that layer, then add another smaller dense layer, then the output layer. We add the dropout layers to reduce the probability of overfitting the data on the training side, although if you train the model too long (too many epochs) you can still eventually overfit it. I experimented with the design of the network a lot, and this one eventually hit the right amount of compute, convergence, and accuracy for me. I use relu as the activation for the hidden layers and softmax for the output layer so that we get a % probability on the output layer. Read more on softmax here: https://keras.io/activations/#softmax.
+
+The overall outcomes are printed to the console in a classification report and then saved to disk to be picked up by the web app.
+
+The web app displays the outcomes in tabular and chart form (I built the chart in plotly.js)
 
 ### Site Design.
 
